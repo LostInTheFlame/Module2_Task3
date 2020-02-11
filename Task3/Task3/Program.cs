@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Task3
 {
@@ -6,33 +7,54 @@ namespace Task3
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите значение переменной A: ");
-            string A = Console.ReadLine();
-            A = A.Replace('.', ',');
-            if (double.TryParse(A, out double a))
+            string separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            Console.Write("Введите первое число: ");
+            string FirstNumber = Console.ReadLine();
+            Console.Write("Введите второе число: ");
+            string SecondNumber = Console.ReadLine();
+            double parsedFirstNumber;
+            double parsedSecondNumber;
+            double temp;
+
+            if (separator == ",")
             {
-                Console.Write("Введите значение переменной B: ");
-                string B = Console.ReadLine();
-                B = B.Replace('.', ',');
-                if (double.TryParse(B, out double b))
+                FirstNumber = FirstNumber.Replace('.', ',');
+                SecondNumber = SecondNumber.Replace('.', ',');
+
+                if (double.TryParse(FirstNumber, out parsedFirstNumber) && double.TryParse(SecondNumber, out parsedSecondNumber))
                 {
-                    double temp = a;
-                    a = b;
-                    b = temp;
-                    Console.WriteLine("\nОбмен значений переменных:");
-                    Console.WriteLine($"A = {a}");
-                    Console.WriteLine($"B = {b}");
+                    temp = parsedFirstNumber;
+                    parsedFirstNumber = parsedSecondNumber;
+                    parsedSecondNumber = temp;
+                    Console.WriteLine("\nОбмен значений чисел:");
+                    Console.WriteLine($"Первое число: {parsedFirstNumber}");
+                    Console.WriteLine($"Второе число: {parsedSecondNumber}");
                 }
                 else
                 {
-                    Console.Write("Значение переменной B введено неверно");
+                    Console.WriteLine("Ошибка при вводе чисел.");
                 }
             }
-            else
-            {
-                Console.Write("Значение переменной A введено неверно.");
-            }
 
+            if (separator == ".")
+            {
+                FirstNumber = FirstNumber.Replace(',', '.');
+                SecondNumber = SecondNumber.Replace(',', '.');
+
+                if (double.TryParse(FirstNumber, out parsedFirstNumber) && double.TryParse(SecondNumber, out parsedSecondNumber))
+                {
+                    temp = parsedFirstNumber;
+                    parsedFirstNumber = parsedSecondNumber;
+                    parsedSecondNumber = temp;
+                    Console.WriteLine("\nОбмен значений чисел:");
+                    Console.WriteLine($"Первое число: {parsedFirstNumber}");
+                    Console.WriteLine($"Второе число: {parsedSecondNumber}");
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка при вводе чисел.");
+                }
+            }
             Console.ReadKey(true);
         }
     }
