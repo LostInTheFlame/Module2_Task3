@@ -8,52 +8,42 @@ namespace Task3
         static void Main(string[] args)
         {
             string separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+            if (separator != "," && separator != ".")
+            {
+                Console.WriteLine("Разделитель целой и дробной части, установленный в операционной системе, не поддерживается.");
+                Console.ReadKey(true);
+                return;
+            }
             Console.Write("Введите первое число: ");
             string FirstNumber = Console.ReadLine();
             Console.Write("Введите второе число: ");
             string SecondNumber = Console.ReadLine();
-            double parsedFirstNumber;
-            double parsedSecondNumber;
-            double temp;
 
             if (separator == ",")
             {
                 FirstNumber = FirstNumber.Replace('.', ',');
                 SecondNumber = SecondNumber.Replace('.', ',');
-
-                if (double.TryParse(FirstNumber, out parsedFirstNumber) && double.TryParse(SecondNumber, out parsedSecondNumber))
-                {
-                    temp = parsedFirstNumber;
-                    parsedFirstNumber = parsedSecondNumber;
-                    parsedSecondNumber = temp;
-                    Console.WriteLine("\nОбмен значений чисел:");
-                    Console.WriteLine($"Первое число: {parsedFirstNumber}");
-                    Console.WriteLine($"Второе число: {parsedSecondNumber}");
-                }
-                else
-                {
-                    Console.WriteLine("Ошибка при вводе чисел.");
-                }
             }
 
             if (separator == ".")
             {
                 FirstNumber = FirstNumber.Replace(',', '.');
                 SecondNumber = SecondNumber.Replace(',', '.');
+            }
 
-                if (double.TryParse(FirstNumber, out parsedFirstNumber) && double.TryParse(SecondNumber, out parsedSecondNumber))
-                {
-                    temp = parsedFirstNumber;
-                    parsedFirstNumber = parsedSecondNumber;
-                    parsedSecondNumber = temp;
-                    Console.WriteLine("\nОбмен значений чисел:");
-                    Console.WriteLine($"Первое число: {parsedFirstNumber}");
-                    Console.WriteLine($"Второе число: {parsedSecondNumber}");
-                }
-                else
-                {
-                    Console.WriteLine("Ошибка при вводе чисел.");
-                }
+            if (double.TryParse(FirstNumber, out double parsedFirstNumber) && double.TryParse(SecondNumber, out double parsedSecondNumber))
+            {
+                double temp = parsedFirstNumber;
+                parsedFirstNumber = parsedSecondNumber;
+                parsedSecondNumber = temp;
+                Console.WriteLine("\nОбмен значений:");
+                Console.WriteLine($"Первое число: {parsedFirstNumber}");
+                Console.WriteLine($"Второе число: {parsedSecondNumber}");
+            }
+            else
+            {
+                Console.WriteLine("\nОшибка при вводе чисел.");
             }
             Console.ReadKey(true);
         }
