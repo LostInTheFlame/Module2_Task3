@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+
 
 namespace Task3
 {
@@ -8,10 +10,14 @@ namespace Task3
         static void Main(string[] args)
         {
             string separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            var replacement = new Dictionary<string, string> {
+                {".", "," },
+                {",", "." },
+            };
 
             if (separator != "," && separator != ".")
             {
-                Console.WriteLine("Разделитель целой и дробной части, установленный в операционной системе, не поддерживается.");
+                Console.WriteLine("Разделитель целой и дробной части, установленный в системе, не поддерживается.");
                 Console.ReadKey(true);
                 return;
             }
@@ -19,18 +25,8 @@ namespace Task3
             string FirstNumber = Console.ReadLine();
             Console.Write("Введите второе число: ");
             string SecondNumber = Console.ReadLine();
-
-            if (separator == ",")
-            {
-                FirstNumber = FirstNumber.Replace('.', ',');
-                SecondNumber = SecondNumber.Replace('.', ',');
-            }
-
-            if (separator == ".")
-            {
-                FirstNumber = FirstNumber.Replace(',', '.');
-                SecondNumber = SecondNumber.Replace(',', '.');
-            }
+            FirstNumber = FirstNumber.Replace(replacement[separator], separator);
+            SecondNumber = SecondNumber.Replace(replacement[separator], separator);
 
             if (double.TryParse(FirstNumber, out double parsedFirstNumber) && double.TryParse(SecondNumber, out double parsedSecondNumber))
             {
